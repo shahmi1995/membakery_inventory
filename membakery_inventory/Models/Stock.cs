@@ -18,6 +18,7 @@ namespace membakery_inventory.Models
         public Stock()
         {
             this.Transactions = new HashSet<Transaction>();
+            this.TransactionIns = new HashSet<TransactionIn>();
         }
     
         public int Stock_ID { get; set; }
@@ -29,5 +30,7 @@ namespace membakery_inventory.Models
         public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransactionIn> TransactionIns { get; set; }
     }
 }

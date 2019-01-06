@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="Emp_ID" />
@@ -45,6 +45,17 @@
           <Property Name="TotalPrice" Type="float" />
           <Property Name="Date" Type="date" />
         </EntityType>
+        <EntityType Name="TransactionIn">
+          <Key>
+            <PropertyRef Name="TransactionNoIn" />
+          </Key>
+          <Property Name="TransactionNoIn" Type="int" Nullable="false" />
+          <Property Name="Emp_ID" Type="int" Nullable="false" />
+          <Property Name="Stock_ID" Type="int" Nullable="false" />
+          <Property Name="IQuantity" Type="int" />
+          <Property Name="IPrice" Type="float" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
         <Association Name="FK_Stocks_Supplier">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
           <End Role="Stocks" Type="Self.Stocks" Multiplicity="*" />
@@ -81,11 +92,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TransactionIn_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="TransactionIn" Type="Self.TransactionIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="TransactionIn">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionIn_Stocks">
+          <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
+          <End Role="TransactionIn" Type="Self.TransactionIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stocks">
+              <PropertyRef Name="Stock_ID" />
+            </Principal>
+            <Dependent Role="TransactionIn">
+              <PropertyRef Name="Stock_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Database1ModelStoreContainer">
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionIn" EntityType="Self.TransactionIn" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Stocks_Supplier" Association="Self.FK_Stocks_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="Stocks" EntitySet="Stocks" />
@@ -98,9 +134,16 @@
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
+          <AssociationSet Name="FK_TransactionIn_Employees" Association="Self.FK_TransactionIn_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="TransactionIn" EntitySet="TransactionIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionIn_Stocks" Association="Self.FK_TransactionIn_Stocks">
+            <End Role="Stocks" EntitySet="Stocks" />
+            <End Role="TransactionIn" EntitySet="TransactionIn" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -114,6 +157,7 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="no_acc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Employees" FromRole="Employees" ToRole="Transaction" />
+          <NavigationProperty Name="TransactionIns" Relationship="Database1Model.FK_TransactionIn_Employees" FromRole="Employee" ToRole="TransactionIn" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -126,6 +170,7 @@
           <Property Name="Supplier_ID" Type="Int32" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_Stocks_Supplier" FromRole="Stocks" ToRole="Supplier" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Stocks" FromRole="Stocks" ToRole="Transaction" />
+          <NavigationProperty Name="TransactionIns" Relationship="Database1Model.FK_TransactionIn_Stocks" FromRole="Stock" ToRole="TransactionIn" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -203,7 +248,53 @@
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
+          <EntitySet Name="TransactionIns" EntityType="Database1Model.TransactionIn" />
+          <AssociationSet Name="FK_TransactionIn_Employees" Association="Database1Model.FK_TransactionIn_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="TransactionIn" EntitySet="TransactionIns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionIn_Stocks" Association="Database1Model.FK_TransactionIn_Stocks">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="TransactionIn" EntitySet="TransactionIns" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TransactionIn">
+          <Key>
+            <PropertyRef Name="TransactionNoIn" />
+          </Key>
+          <Property Name="TransactionNoIn" Type="Int32" Nullable="false" />
+          <Property Name="Emp_ID" Type="Int32" Nullable="false" />
+          <Property Name="Stock_ID" Type="Int32" Nullable="false" />
+          <Property Name="IQuantity" Type="Int32" />
+          <Property Name="IPrice" Type="Double" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Database1Model.FK_TransactionIn_Employees" FromRole="TransactionIn" ToRole="Employee" />
+          <NavigationProperty Name="Stock" Relationship="Database1Model.FK_TransactionIn_Stocks" FromRole="TransactionIn" ToRole="Stock" />
+        </EntityType>
+        <Association Name="FK_TransactionIn_Employees">
+          <End Type="Database1Model.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="Database1Model.TransactionIn" Role="TransactionIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="TransactionIn">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionIn_Stocks">
+          <End Type="Database1Model.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="Database1Model.TransactionIn" Role="TransactionIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Stock_ID" />
+            </Principal>
+            <Dependent Role="TransactionIn">
+              <PropertyRef Name="Stock_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -251,6 +342,18 @@
                 <ScalarProperty Name="TQuantity" ColumnName="TQuantity" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionIns">
+            <EntityTypeMapping TypeName="Database1Model.TransactionIn">
+              <MappingFragment StoreEntitySet="TransactionIn">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IPrice" ColumnName="IPrice" />
+                <ScalarProperty Name="IQuantity" ColumnName="IQuantity" />
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+                <ScalarProperty Name="TransactionNoIn" ColumnName="TransactionNoIn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

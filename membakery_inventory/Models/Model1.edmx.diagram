@@ -5,13 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="91c084a6829b4a9b8a5e2ed72f8bfa7f" Name="Diagram1">
-        <EntityTypeShape EntityType="Database1Model.Employee" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Employee" Width="1.5" PointX="5.375" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.Stock" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.Supplier" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Database1Model.Transaction" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="Database1Model.FK_Transaction_Employees" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK_Stocks_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK_Transaction_Stocks" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Database1Model.TransactionIn" Width="1.5" PointX="3.25" PointY="5.125" />
+        <AssociationConnector Association="Database1Model.FK_TransactionIn_Employees" />
+        <AssociationConnector Association="Database1Model.FK_TransactionIn_Stocks" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

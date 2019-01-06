@@ -29,5 +29,6 @@ namespace membakery_inventory.Models
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TransactionIn> TransactionIns { get; set; }
     }
 }

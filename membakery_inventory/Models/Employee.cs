@@ -20,6 +20,7 @@ namespace membakery_inventory.Models
         public Employee()
         {
             this.Transactions = new HashSet<Transaction>();
+            this.TransactionIns = new HashSet<TransactionIn>();
         }
     
         public int Emp_ID { get; set; }
@@ -30,5 +31,7 @@ namespace membakery_inventory.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransactionIn> TransactionIns { get; set; }
     }
 }

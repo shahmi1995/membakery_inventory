@@ -1,0 +1,58 @@
+﻿@model membakery_inventory.Models.TransactionIn
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TransactionIn</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stock.Stock_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stock.Stock_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionNoIn }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
