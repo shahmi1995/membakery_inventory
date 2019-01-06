@@ -14,6 +14,8 @@ namespace membakery_inventory.Models
     
     public partial class Employee
     {
+        internal string LoginErrorMessage;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
