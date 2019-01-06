@@ -1,0 +1,57 @@
+﻿@model IEnumerable<membakery_inventory.Models.Transaction>
+
+@{
+    ViewBag.Title = "Stock Out";
+}
+
+<h2>Stock Out</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.Emp_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stock.Stock_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.Emp_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stock.Stock_Name)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.TransactionNo }) |*@
+            @Html.ActionLink("Details", "Details", new { id=item.TransactionNo }) @*|
+            @Html.ActionLink("Delete", "Delete", new { id=item.TransactionNo })*@
+        </td>
+    </tr>
+}
+
+</table>
