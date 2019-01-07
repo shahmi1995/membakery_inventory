@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<membakery_inventory.Models.TransactionIn>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Stock In";
 }
 
-<h2>Index</h2>
+<h2>Stock In</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.name)
+            @Html.DisplayNameFor(model => model.Employee.Emp_ID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Stock.Stock_Name)
@@ -41,15 +41,15 @@
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Employee.name)
+            @Html.DisplayFor(modelItem => item.Employee.Emp_ID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Stock.Stock_Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TransactionNoIn }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.TransactionNoIn }) |*@
             @Html.ActionLink("Details", "Details", new { id=item.TransactionNoIn }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TransactionNoIn })
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.TransactionNoIn })*@
         </td>
     </tr>
 }
